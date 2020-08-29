@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-shop
+  annotations:
+    # use the shared ingress-nginx
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: shop.com
+    http:
+      paths:
+      - path: /api/products
+        backend:
+          serviceName: products-service
+          servicePort: 3000
+      - path: /api/cart
+        backend:
+          serviceName: cart-service
+          servicePort: 3001

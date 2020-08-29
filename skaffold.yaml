@@ -1,0 +1,24 @@
+apiVersion: skaffold/v2beta4
+kind: Config
+metadata:
+  name: shop-skaffold
+build:
+  artifacts:
+  - image: amourycodes/cart
+    context: cart
+    sync:
+      manual: 
+      - src: "src/**/*.js"
+        dest: "."
+  - image: amourycodes/products
+    context: products
+    sync:
+      manual:
+      - src: "src/**/*.js"
+        dest: "."
+deploy:
+  kubectl:
+    manifests:
+    - k8s/cart-definition.yaml
+    - k8s/ingress.yaml
+    - k8s/products-definition.yaml
